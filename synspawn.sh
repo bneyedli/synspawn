@@ -45,9 +45,9 @@ function HostCheck {
 function WetWork {
 	if [ $ROLE -eq 0 ]
 	then
-		skill -9 synergys
+		/usr/bin/sudo /usr/bin/skill -9 synergys
 	else
-		skill -9 synergyc
+		/usr/bin/sudo /usr/bin/skill -9 synergyc
 	fi
 }
 
