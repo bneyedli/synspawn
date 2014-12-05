@@ -35,10 +35,10 @@ function HostCheck {
 	if [ $? -eq 0 ]
 	then
 		echo "Host $SRV Alive!!!"
-		$HSTATE='1'
+		HSTATE='1'
 	else
 		echo "host $SRV dead."
-		$HSTATE='0'
+		HSTATE='0'
 	fi
 }
 
@@ -55,17 +55,26 @@ function ClientSpawn {
 	ps auxwww|grep synergyc|grep -v grep
 	if [ $? -eq 0 ]
 	then
+		echo "Process running, running cleanup..."
 		WetWork
 	fi
-
-	/usr/bin/synergyc $OPTS $SRV
+	
+	HostCheck
+	if [ $HSTATE -eq 1 ]
+	then
+		echo "Spawning synergy client..."
+		echo "Running: /usr/bin/synergyc $OPTS $SRV"
+		/usr/bin/synergyc $OPTS $SRV
+	fi
 }
 function ServerSpawn {
 	ps auxwww|grep synergys|grep -v grep
 	if [ $? -eq 0 ]
 	then
+		echo "Process running, running cleanup..."
 		WetWork
 	fi
+	echo "Spawning synergy service..."
 	/usr/bin/synergys -a $LISTEN -c $SCONF
 }
 
