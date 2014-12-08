@@ -2,6 +2,8 @@
 
 ARGS=$1
 LCONF=/etc/synspawn.conf
+SBIN=/usr/local/bin/synergys
+CBIN=/usr/local/bin/synergyc
 
 if [ -z "$1" ]
 then
@@ -63,8 +65,8 @@ function ClientSpawn {
 	if [ $HSTATE -eq 1 ]
 	then
 		echo "Spawning synergy client..."
-		echo "Running: /usr/bin/synergyc $OPTS $SRV"
-		/usr/bin/synergyc $OPTS $SRV
+		echo "Running: $CBIN $OPTS $SRV"
+		$CBIN $OPTS $SRV
 	fi
 }
 function ServerSpawn {
@@ -75,7 +77,7 @@ function ServerSpawn {
 		WetWork
 	fi
 	echo "Spawning synergy service..."
-	/usr/bin/synergys -a $LISTEN -c $SCONF
+	$SBIN -a $LISTEN -c $SCONF
 }
 
 if [ "$ARGS" = "STOP" ]
